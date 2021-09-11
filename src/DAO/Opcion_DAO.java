@@ -8,6 +8,8 @@ package DAO;
 
 import Entity.Opcion;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import utilities.Connection_;
 
 /**
@@ -33,6 +35,32 @@ public class Opcion_DAO {
             result = false;
         }
         return result;
+    }
+    
+        public ArrayList<Opcion> getOpciones(int id_pregunta) {
+        ResultSet r = null;
+        ArrayList<Opcion> data = new ArrayList<Opcion>();
+        int cont= 1;
+        
+        try {
+            String sql = "SELECT * FROM opciones WHERE id_pregunta=?";
+            PreparedStatement p = con.getCon().prepareStatement(sql);
+            
+             p.setInt(1, id_pregunta);
+             r = p.executeQuery();
+             
+             Opcion opc;
+             while(r.next()){
+                 
+                 opc = new Opcion(r.getString("texto"),r.getBoolean("iscorrect"),r.getInt("id_pregunta"));
+                 data.add(opc);
+             
+             }
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return data;
     }
     
 

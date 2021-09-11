@@ -9,6 +9,8 @@ package DAO;
 import Entity.Opcion;
 import Entity.Pregunta;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import utilities.Connection_;
 
 /**
@@ -42,6 +44,35 @@ public class Pregunta_DAO {
             result = false;
         }
         return result;
+    }
+    
+        public ArrayList<Pregunta> getPreguntas(int id_categoria) {
+        ResultSet r = null;
+        ArrayList<Pregunta> data = new ArrayList<Pregunta>();
+        int cont= 1;
+        
+        try {
+            String sql = "SELECT * FROM pregunta WHERE id_categoria=?";
+            PreparedStatement p = con.getCon().prepareStatement(sql);
+            
+             p.setInt(1, id_categoria);
+             r = p.executeQuery();
+             Pregunta pregunta;
+             Opcion_DAO odao = new Opcion_DAO();
+             ArrayList<Opcion> Opciones;
+             
+             while(r.next()){
+                
+                Opciones = odao.getOpciones(r.getInt("id"));
+                pregunta = new Pregunta(r.getInt("id"),r.getString("enunciado"),r.getInt("id_categoria"),Opciones);
+                 data.add(pregunta);
+             
+             }
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return data;
     }
     
 }
