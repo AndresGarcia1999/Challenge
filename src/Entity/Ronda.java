@@ -13,11 +13,17 @@ public class Ronda {
     
     private int num;
     private boolean isPassed;
+    private int id_categoria;
+    private int id_jugador;
 
-    public Ronda(int num, boolean isPassed) {
+    public Ronda(int num, boolean isPassed, int id_categoria, int id_jugador) {
         this.num = num;
         this.isPassed = isPassed;
+        this.id_categoria = id_categoria;
+        this.id_jugador = id_jugador;
     }
+
+ 
 
     public int getNum() {
         return num;
@@ -26,5 +32,15 @@ public class Ronda {
     public boolean isIsPassed() {
         return isPassed;
     }
+
+    public int getId_categoria() {
+        return id_categoria;
+    }
+
+    public int getId_jugador() {
+        return id_jugador;
+    }
+    
+    
     
 }

@@ -15,13 +15,17 @@ public class Pregunta {
     
     private int id;
     private String enunciado;
-    private ArrayList<Opciones> opciones;
+    private int id_categoria;
+    private ArrayList<Opcion> opciones;
 
-    public Pregunta(int id, String enunciado, ArrayList<Opciones> opciones) {
+    public Pregunta(int id, String enunciado, int id_categoria, ArrayList<Opcion> opciones) {
         this.id = id;
         this.enunciado = enunciado;
+        this.id_categoria = id_categoria;
         this.opciones = opciones;
     }
+
+    
 
     public int getId() {
         return id;
@@ -31,8 +35,14 @@ public class Pregunta {
         return enunciado;
     }
 
-    public ArrayList<Opciones> getOpciones() {
+    public ArrayList<Opcion> getOpciones() {
         return opciones;
     }
+
+    public int getId_categoria() {
+        return id_categoria;
+    }
+    
+    
     
 }

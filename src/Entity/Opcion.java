@@ -9,16 +9,19 @@ package Entity;
  *
  * @author andre
  */
-public class Opciones {
+public class Opcion {
     
     private String text;
     private boolean isCorrect;
+    private int id_pregunta;
 
-    public Opciones( String text, boolean isCorrect) {
-      
+    public Opcion(String text, boolean isCorrect, int id_pregunta) {
         this.text = text;
         this.isCorrect = isCorrect;
+        this.id_pregunta = id_pregunta;
     }
+
+ 
 
     public String getText() {
         return text;
@@ -26,6 +29,10 @@ public class Opciones {
 
     public boolean isIsCorrect() {
         return isCorrect;
+    }
+
+    public int getId_pregunta() {
+        return id_pregunta;
     }
     
     
