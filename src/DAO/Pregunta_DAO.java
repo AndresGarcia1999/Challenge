@@ -74,5 +74,25 @@ public class Pregunta_DAO {
         }
         return data;
     }
+        
+    public boolean verifyPregunta(int id){
+        ResultSet r=null;
+        boolean result= false;
+        try{
+            String sql = "SELECT id FROM pregunta where id=?";
+            PreparedStatement p= con.getCon().prepareStatement(sql);
+            p.setInt(1, id);
+            r= p.executeQuery();
+            if(r.next()){
+                result=true;
+            }
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+        return result;
+    }
+    
+    
+
     
 }

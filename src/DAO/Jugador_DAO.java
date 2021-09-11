@@ -7,6 +7,7 @@ package DAO;
 
 import Entity.Jugador;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import utilities.Connection_;
 
 /**
@@ -29,6 +30,25 @@ public class Jugador_DAO {
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
             result = false;
+        }
+        return result;
+    }
+    
+    public Jugador getJugador(String id){
+        ResultSet r=null;
+        Jugador result= null;
+        try{
+            String sql = "SELECT * FROM jugador where id=?";
+            PreparedStatement p= con.getCon().prepareStatement(sql);
+            p.setString(1, id);
+            r= p.executeQuery();
+            if(r.next()){
+                result = new Jugador(r.getInt("id"),r.getString("nombre"));
+            }
+            con.closeDB();
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+            con.closeDB();
         }
         return result;
     }
