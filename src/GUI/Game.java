@@ -397,6 +397,7 @@ public class Game extends javax.swing.JFrame {
                         }
                     }
                 } else {
+                    ronda_actual.setIsPassed(false);
                     rdao.saveRonda(ronda_actual);
                     JOptionPane.showMessageDialog(rootPane, "Respuesta incorrecta");
                     Config config = new Config();
