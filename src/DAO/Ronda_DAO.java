@@ -18,7 +18,7 @@ public class Ronda_DAO {
     
     Connection_ con = new Connection_();
 
-    public boolean saveJugador(Ronda ronda) {
+    public boolean saveRonda(Ronda ronda) {
         boolean result = true;
         String sql = "insert into ronda (num,id_jugador,ispassed,id_categoria) values(?,?,?,?)";
         try {

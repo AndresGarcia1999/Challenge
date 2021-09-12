@@ -27,6 +27,10 @@ public class Premio {
     public int getId_jugador() {
         return id_jugador;
     }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
+    }
     
     
 }

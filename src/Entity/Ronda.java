@@ -40,6 +40,18 @@ public class Ronda {
     public int getId_jugador() {
         return id_jugador;
     }
+
+    public void setNum(int num) {
+        this.num = num;
+    }
+
+    public void setIsPassed(boolean isPassed) {
+        this.isPassed = isPassed;
+    }
+
+    public void setId_categoria(int id_categoria) {
+        this.id_categoria = id_categoria;
+    }
     
     
     

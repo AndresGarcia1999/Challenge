@@ -5,8 +5,22 @@
  */
 package GUI;
 
+import DAO.Categoria_DAO;
 import DAO.Jugador_DAO;
+import DAO.Pregunta_DAO;
+import DAO.Premio_DAO;
+import DAO.Ronda_DAO;
+import Entity.Categoria;
 import Entity.Jugador;
+import Entity.Opcion;
+import Entity.Pregunta;
+import Entity.Premio;
+import Entity.Ronda;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.Random;
+import java.util.Set;
+import javax.swing.AbstractButton;
 import javax.swing.JOptionPane;
 
 /**
@@ -16,6 +30,14 @@ import javax.swing.JOptionPane;
 public class Game extends javax.swing.JFrame {
 
     private Jugador jugador_actual;
+    private Ronda ronda_actual;
+    private Premio premio_actual;
+    private String dificultad_actual;
+    Categoria_DAO cdao = new Categoria_DAO();
+    Pregunta_DAO pdao = new Pregunta_DAO();
+    Ronda_DAO rdao = new Ronda_DAO();
+    Premio_DAO prdao = new Premio_DAO();
+    Pregunta pregunta;
 
     /**
      * Creates new form Game
@@ -35,6 +57,7 @@ public class Game extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         txtIdJugador = new javax.swing.JTextField();
         txtNombre = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
@@ -45,6 +68,17 @@ public class Game extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         lblNombre = new javax.swing.JLabel();
+        lblPregunta = new javax.swing.JLabel();
+        txtOpcC = new javax.swing.JRadioButton();
+        txtOpcA = new javax.swing.JRadioButton();
+        txtOpcB = new javax.swing.JRadioButton();
+        txtOpcD = new javax.swing.JRadioButton();
+        summitBtn = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
+        lblRonda = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        lblPremio = new javax.swing.JLabel();
+        lblCategoria = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -87,6 +121,35 @@ public class Game extends javax.swing.JFrame {
 
         jLabel6.setText("Jugador: ");
 
+        buttonGroup1.add(txtOpcC);
+        txtOpcC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtOpcCActionPerformed(evt);
+            }
+        });
+
+        buttonGroup1.add(txtOpcA);
+
+        buttonGroup1.add(txtOpcB);
+
+        buttonGroup1.add(txtOpcD);
+        txtOpcD.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtOpcDActionPerformed(evt);
+            }
+        });
+
+        summitBtn.setText("Siguiente");
+        summitBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                summitBtnActionPerformed(evt);
+            }
+        });
+
+        jLabel7.setText("Ronda");
+
+        jLabel8.setText("Premio:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -94,17 +157,16 @@ public class Game extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(33, 33, 33)
                 .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(3, 3, 3)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
-                    .addComponent(txtIdJugador))
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(txtIdJugador, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNombre))
                 .addGap(37, 37, 37)
                 .addComponent(registerBtn)
                 .addGap(56, 56, 56))
@@ -114,13 +176,42 @@ public class Game extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(jLabel4))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(161, 161, 161)
-                        .addComponent(jLabel5)
-                        .addGap(86, 86, 86)
-                        .addComponent(jLabel6)
-                        .addGap(18, 18, 18)
-                        .addComponent(lblNombre)))
-                .addContainerGap(12, Short.MAX_VALUE))
+                        .addGap(35, 35, 35)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(txtOpcD)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(summitBtn))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtOpcB)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addGroup(layout.createSequentialGroup()
+                                                        .addComponent(jLabel7)
+                                                        .addGap(135, 135, 135)
+                                                        .addComponent(jLabel5))
+                                                    .addComponent(lblRonda))
+                                                .addGap(86, 86, 86))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(lblCategoria)
+                                                .addGap(250, 250, 250)))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jLabel6)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(lblNombre))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jLabel8)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(lblPremio))))
+                                    .addComponent(txtOpcC)
+                                    .addComponent(txtOpcA)
+                                    .addComponent(lblPregunta, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 10, Short.MAX_VALUE)))))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -147,8 +238,32 @@ public class Game extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(jLabel6)
-                    .addComponent(lblNombre))
-                .addContainerGap(224, Short.MAX_VALUE))
+                    .addComponent(lblNombre)
+                    .addComponent(jLabel7))
+                .addGap(4, 4, 4)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblRonda)
+                    .addComponent(jLabel8)
+                    .addComponent(lblPremio))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblCategoria)
+                .addGap(12, 12, 12)
+                .addComponent(lblPregunta, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(txtOpcA)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtOpcB)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtOpcC)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtOpcD)
+                        .addContainerGap(47, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(summitBtn)
+                        .addContainerGap())))
         );
 
         pack();
@@ -174,18 +289,16 @@ public class Game extends javax.swing.JFrame {
                 jugador_actual = new Jugador(Integer.parseInt(txtIdJugador.getText()), txtNombre.getText());
 
                 if (jdao.saveJugador(jugador_actual)) {
-                    
-                    JOptionPane.showMessageDialog(rootPane, "Registro existoso !");
-                    lblNombre.setText(jugador_actual.getNombre());
-                    resetFields();
 
-                }else{
-                    
+                    JOptionPane.showMessageDialog(rootPane, "Registro existoso !");
+                    initGame();
+
+                } else {
+
                     int resp2 = JOptionPane.showConfirmDialog(rootPane, "El jugador ya existe, ¿desea continuar con este jugador?", "Attention!", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE);
                     if (resp == JOptionPane.YES_OPTION) {
-                        jugador_actual= jdao.getJugador(txtIdJugador.getText());
-                        lblNombre.setText(jugador_actual.getNombre());
-                        resetFields();
+                        jugador_actual = jdao.getJugador(Integer.parseInt(txtIdJugador.getText()));
+                        initGame();
                     }
                 }
             }
@@ -195,13 +308,40 @@ public class Game extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_registerBtnActionPerformed
 
-    
-     private void resetFields() {
-        
+    private void initGame() {
+
+        lblNombre.setText(jugador_actual.getNombre());
+        resetFields();
+        ronda_actual = new Ronda(1, false, 1, jugador_actual.getId());
+        premio_actual = new Premio(0, jugador_actual.getId());
+
+        actualizarLabels();
+
+    }
+
+    private void actualizarLabels() {
+
+        ronda_actual.setId_categoria(ronda_actual.getNum());
+        Random randomGenerator = new Random();
+        int index = randomGenerator.nextInt(pdao.getPreguntas(ronda_actual.getId_categoria()).size());
+        pregunta = pdao.getPreguntas(ronda_actual.getId_categoria()).get(index);
+        lblRonda.setText("" + ronda_actual.getNum());
+        lblPremio.setText("" + premio_actual.getCantidad());
+        lblPregunta.setText(pregunta.getEnunciado());
+        dificultad_actual = cdao.getCategoriaDificultad(ronda_actual.getNum());
+        lblCategoria.setText(dificultad_actual);
+        txtOpcA.setText(pregunta.getOpciones().get(0).getText());
+        txtOpcB.setText(pregunta.getOpciones().get(1).getText());
+        txtOpcC.setText(pregunta.getOpciones().get(2).getText());
+        txtOpcD.setText(pregunta.getOpciones().get(3).getText());
+
+    }
+
+    private void resetFields() {
+
         txtIdJugador.setText("");
         txtNombre.setText("");
-       
-        
+
     }
     private void txtIdJugadorKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdJugadorKeyReleased
         // TODO add your handling code here:
@@ -216,6 +356,76 @@ public class Game extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtIdJugadorKeyTyped
 
+    private void txtOpcCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtOpcCActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtOpcCActionPerformed
+
+    private void txtOpcDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtOpcDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtOpcDActionPerformed
+
+    private void summitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_summitBtnActionPerformed
+        // TODO add your handling code here:
+        for (Opcion op : pregunta.getOpciones()) {
+
+            if (op.getText().equals(getSelectedButtonText())) {
+
+                if (op.isIsCorrect()) {
+
+                    JOptionPane.showMessageDialog(rootPane, "Respuesta Correcta");
+                    ronda_actual.setIsPassed(true);
+                    rdao.saveRonda(ronda_actual);
+                    premio_actual.setCantidad(premio_actual.getCantidad() + 10000);
+                    if (ronda_actual.getNum() == 5) {
+
+                        prdao.savePremio(premio_actual);
+                        JOptionPane.showMessageDialog(rootPane, "Felicitaciones su premio es de: " + premio_actual.getCantidad());
+                        Config config = new Config();
+                        config.setVisible(true);
+                        Game.this.dispose();
+                    } else {
+
+                        int resp = JOptionPane.showConfirmDialog(rootPane, "Desea continuar?", "Attention!", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE);
+                        if (resp == JOptionPane.YES_OPTION) {
+                            ronda_actual.setNum(ronda_actual.getNum() + 1);
+                            actualizarLabels();
+
+                        } else {
+                            prdao.savePremio(premio_actual);
+                            JOptionPane.showMessageDialog(rootPane, "Felicitaciones su premio es de: " + premio_actual.getCantidad());
+                            Config config = new Config();
+                            config.setVisible(true);
+                            Game.this.dispose();
+                        }
+                    }
+                } else {
+                    rdao.saveRonda(ronda_actual);
+                    JOptionPane.showMessageDialog(rootPane, "Respuesta incorrecta");
+                    Config config = new Config();
+                    config.setVisible(true);
+                    Game.this.dispose();
+
+                }
+
+                break;
+            }
+
+        }
+    }//GEN-LAST:event_summitBtnActionPerformed
+
+    public String getSelectedButtonText() {
+
+        for (Enumeration<AbstractButton> buttons = buttonGroup1.getElements(); buttons.hasMoreElements();) {
+            AbstractButton button = buttons.nextElement();
+
+            if (button.isSelected()) {
+                return button.getText();
+            }
+        }
+
+        return null;
+    }
+
     private boolean validation() {
 
         if (txtIdJugador.getText().equals("") || txtNombre.getText().equals("")) {
@@ -228,48 +438,29 @@ public class Game extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Game.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Game.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Game.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Game.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Game().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel lblCategoria;
     private javax.swing.JLabel lblNombre;
+    private javax.swing.JLabel lblPregunta;
+    private javax.swing.JLabel lblPremio;
+    private javax.swing.JLabel lblRonda;
     private javax.swing.JButton registerBtn;
+    private javax.swing.JButton summitBtn;
     private javax.swing.JTextField txtIdJugador;
     private javax.swing.JTextField txtNombre;
+    private javax.swing.JRadioButton txtOpcA;
+    private javax.swing.JRadioButton txtOpcB;
+    private javax.swing.JRadioButton txtOpcC;
+    private javax.swing.JRadioButton txtOpcD;
     // End of variables declaration//GEN-END:variables
 }

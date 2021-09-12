@@ -34,13 +34,13 @@ public class Jugador_DAO {
         return result;
     }
     
-    public Jugador getJugador(String id){
+    public Jugador getJugador(int id){
         ResultSet r=null;
         Jugador result= null;
         try{
             String sql = "SELECT * FROM jugador where id=?";
             PreparedStatement p= con.getCon().prepareStatement(sql);
-            p.setString(1, id);
+            p.setInt(1, id);
             r= p.executeQuery();
             if(r.next()){
                 result = new Jugador(r.getInt("id"),r.getString("nombre"));

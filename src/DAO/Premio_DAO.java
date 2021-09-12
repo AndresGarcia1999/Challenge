@@ -17,7 +17,7 @@ public class Premio_DAO {
     
     Connection_ con = new Connection_();
 
-    public boolean saveJugador(Premio premio) {
+    public boolean savePremio(Premio premio) {
         boolean result = true;
         String sql = "insert into premio (cantidad,id_jugador) values(?,?)";
         try {
