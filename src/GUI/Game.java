@@ -10,16 +10,13 @@ import DAO.Jugador_DAO;
 import DAO.Pregunta_DAO;
 import DAO.Premio_DAO;
 import DAO.Ronda_DAO;
-import Entity.Categoria;
 import Entity.Jugador;
 import Entity.Opcion;
 import Entity.Pregunta;
 import Entity.Premio;
 import Entity.Ronda;
-import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Random;
-import java.util.Set;
 import javax.swing.AbstractButton;
 import javax.swing.JOptionPane;
 
@@ -37,7 +34,7 @@ public class Game extends javax.swing.JFrame {
     Pregunta_DAO pdao = new Pregunta_DAO();
     Ronda_DAO rdao = new Ronda_DAO();
     Premio_DAO prdao = new Premio_DAO();
-    Pregunta pregunta;
+    private Pregunta pregunta;
 
     /**
      * Creates new form Game
@@ -46,6 +43,7 @@ public class Game extends javax.swing.JFrame {
 
         initComponents();
         this.setLocationRelativeTo(null);
+        enabledG(false);
     }
 
     /**
@@ -171,46 +169,42 @@ public class Game extends javax.swing.JFrame {
                 .addComponent(registerBtn)
                 .addGap(56, 56, 56))
             .addGroup(layout.createSequentialGroup()
+                .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel4))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtOpcB)
+                            .addComponent(txtOpcC)
+                            .addComponent(txtOpcA)
+                            .addComponent(lblPregunta, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(txtOpcD)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(summitBtn))
+                                .addGap(10, 10, 10)
+                                .addComponent(lblRonda))
                             .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(lblCategoria, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(135, 135, 135)
+                                .addComponent(jLabel5)
+                                .addGap(86, 86, 86)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtOpcB)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addGroup(layout.createSequentialGroup()
-                                                        .addComponent(jLabel7)
-                                                        .addGap(135, 135, 135)
-                                                        .addComponent(jLabel5))
-                                                    .addComponent(lblRonda))
-                                                .addGap(86, 86, 86))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(lblCategoria)
-                                                .addGap(250, 250, 250)))
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jLabel6)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(lblNombre))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jLabel8)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(lblPremio))))
-                                    .addComponent(txtOpcC)
-                                    .addComponent(txtOpcA)
-                                    .addComponent(lblPregunta, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 10, Short.MAX_VALUE)))))
+                                        .addComponent(jLabel8)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(lblPremio))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel6)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(lblNombre)))))
+                        .addGap(22, 22, 22))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(txtOpcD)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(summitBtn)
+                        .addContainerGap())))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel4)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -247,20 +241,20 @@ public class Game extends javax.swing.JFrame {
                     .addComponent(lblPremio))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblCategoria)
-                .addGap(12, 12, 12)
+                .addGap(18, 18, 18)
                 .addComponent(lblPregunta, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
+                        .addGap(18, 18, 18)
                         .addComponent(txtOpcA)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtOpcB)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtOpcC)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtOpcD)
-                        .addContainerGap(47, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(44, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(summitBtn)
                         .addContainerGap())))
@@ -310,6 +304,8 @@ public class Game extends javax.swing.JFrame {
 
     private void initGame() {
 
+        disabledR();
+        enabledG(true);
         lblNombre.setText(jugador_actual.getNombre());
         resetFields();
         ronda_actual = new Ronda(1, false, 1, jugador_actual.getId());
@@ -413,6 +409,36 @@ public class Game extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_summitBtnActionPerformed
 
+    public void disabledR(){
+        
+        jLabel1.setVisible(false);
+        jLabel2.setVisible(false);
+        jLabel3.setVisible(false);
+        txtNombre.setVisible(false);
+        txtNombre.setEnabled(false);
+        txtIdJugador.setVisible(false);
+        txtIdJugador.setEnabled(false);
+        registerBtn.setEnabled(false);
+        registerBtn.setVisible(false);
+
+    }
+    
+    public void enabledG( boolean status){   
+        jLabel5.setVisible(status);
+        jLabel6.setVisible(status);
+        jLabel7.setVisible(status);
+        jLabel8.setVisible(status);
+        txtOpcA.setEnabled(status);
+        txtOpcB.setEnabled(status);
+        txtOpcC.setEnabled(status);
+        txtOpcD.setEnabled(status);
+        summitBtn.setEnabled(status);
+        txtOpcA.setVisible(status);
+        txtOpcB.setVisible(status);
+        txtOpcC.setVisible(status);
+        txtOpcD.setVisible(status);
+        summitBtn.setVisible(status);
+    }
     public String getSelectedButtonText() {
 
         for (Enumeration<AbstractButton> buttons = buttonGroup1.getElements(); buttons.hasMoreElements();) {

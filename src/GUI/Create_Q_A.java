@@ -236,8 +236,6 @@ public class Create_Q_A extends javax.swing.JFrame {
 
     private void createQActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createQActionPerformed
         // TODO add your handling code he
-        System.out.println(categoriaCB.getSelectedIndex() + 1);
-        System.out.println(correctAnsCB.getSelectedItem().toString());
 
         if (validation()) {
 
